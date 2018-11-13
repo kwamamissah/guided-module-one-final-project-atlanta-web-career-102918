@@ -1,19 +1,20 @@
 
 
+
 def welcome
   weekday = DateTime.now.strftime('%A')
   puts "Happy #{weekday}!  I am Truly Unique <3.  Sign up or Log in"
-  prompt_user = puts "S for sign up or L for login"
-  response = gets.chomp.downcase
-  until response == 'l' || response == 's'
+  prompt_user = puts "Sign up = S Login = L"
+  response = STDIN.gets.chomp
+  until response.downcase == 'l' || response.downcase == 's'
     invalid_response
     prompt_user
-    response = gets.chomp.downcase
+    response = STDIN.gets.chomp
   end
 
-  if response == "l"
+  if response.downcase == "l"
     log_in
-  elsif response == "s"
+  elsif response.downcase == "s"
     sign_up
   end
 end
@@ -22,11 +23,11 @@ end
 
 
 def user_input_name
-  gets.chomp.downcase
+  STDIN.gets.chomp
 end
 
 def user_input_email
-  gets.chomp.downcase
+  STDIN.gets.chomp
 end
 
 def invalid_response
@@ -37,9 +38,9 @@ end
 
 def sign_up
   puts "What's your name"
-  name = gets.chomp
+  name = STDIN.gets.chomp
   puts "What's your email address?"
-  email = gets.chomp
+  email = STDIN.gets.chomp
   User.create(name: name, email: email)
 end
 
@@ -48,18 +49,25 @@ def search_email(email)
 end
 
 def log_in
-  "What's your email address"
-  email = gets.chomp.downcase
+  puts "What's your email address"
+  email = STDIN.gets.chomp
+  sb_greeting 
+end
+
+def sb_greeting
+  puts  "Would you like a poem or a quote?"
+  prompt_user = puts "Poem = P Quote = Q"
+  quote_or_poem = STDIN.gets.chomp.downcase
 end
 
 def greeting_return(name, mood, type)
-  "Welcome back #{name}! Would you like another #{mood} #{type}?"
+  puts "Welcome back #{name}! Would you like another #{mood} #{type}?"
   prompt_user = puts "Y for Yes or N for No"
-  response = gets.chomp.downcase
-  until response == 'y' || response == 'n'
+  response = STDIN.gets.chomp
+  until response.downcase == 'y' || response.downcase == 'n'
     invalid_response
     prompt_user
-    response = gets.chomp.downcase
+    response = STDIN.gets.chomp
   end
 
   if response == "y"
@@ -69,7 +77,6 @@ def greeting_return(name, mood, type)
   end
 end
 
-end
 
 def greeting_new(name, mood, type)
   "Welcome #{name}! What "
