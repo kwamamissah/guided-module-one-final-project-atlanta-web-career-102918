@@ -10,9 +10,14 @@ def welcome
     prompt_user
     response = gets.chomp.downcase
   end
-  
+
+  if response == "l"
+    log_in
+  elsif response == "s"
+    sign_up
+  end
 end
-#if response = s go to get info
+#if response = s go to sign_up
 #else go to log_in
 
 
@@ -24,26 +29,8 @@ def user_input_email
   gets.chomp.downcase
 end
 
-
-
-def hit?(card_total)
-  prompt_user
-  input = get_user_input
-  until input == 'h' || input == 's'
-    invalid_command
-    prompt_user
-    input = get_user_input
-  end
-  if input == 'h'
-    card_total += deal_card
-  elsif input == 's'
-    card_total
-  end
-end
-
-
 def invalid_response
-  puts "Please put S or L"
+  puts "Please put a valid response."
 end
 
 
@@ -53,6 +40,7 @@ def sign_up
   name = gets.chomp
   puts "What's your email address?"
   email = gets.chomp
+  User.create(name: name, email: email)
 end
 
 def search_email(email)
@@ -62,4 +50,27 @@ end
 def log_in
   "What's your email address"
   email = gets.chomp.downcase
+end
+
+def greeting_return(name, mood, type)
+  "Welcome back #{name}! Would you like another #{mood} #{type}?"
+  prompt_user = puts "Y for Yes or N for No"
+  response = gets.chomp.downcase
+  until response == 'y' || response == 'n'
+    invalid_response
+    prompt_user
+    response = gets.chomp.downcase
+  end
+
+  if response == "y"
+
+  elsif response == "n"
+
+  end
+end
+
+end
+
+def greeting_new(name, mood, type)
+  "Welcome #{name}! What "
 end

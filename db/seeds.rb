@@ -1,8 +1,8 @@
 
 
-jimbo = User.create('jimbo bob', 'cantswim@gmail.com')
-kamoo = User.create('kamoo', 'singloud@squarespace.com')
-ryan = User.create('RyAn', 'talktome@gmail.com')
+jimbo = User.create(name: 'jimbo bob', email:'cantswim@gmail.com')
+kamoo = User.create(name:'kamoo', email:'singloud@squarespace.com')
+ryan = User.create(name:'RyAn', email:'talktome@gmail.com')
 
 quote = Letter.create(type: 'quote', mood: 'love', title: 'quote1', content: "You're great!")
 poem = Letter.create(type: 'poem', mood: 'encouragement', title: 'poem1', content: "I love you.")
