@@ -3,7 +3,7 @@ class CreateHistories < ActiveRecord::Migration[5.0]
     create_table :histories do |t|
       t.integer :user_id
       t.integer :letter_id
-      t.integer :letter_rating
+      t.integer :rating
     end
   end
 end

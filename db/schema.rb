@@ -15,11 +15,11 @@ ActiveRecord::Schema.define(version: 3) do
   create_table "histories", force: :cascade do |t|
     t.integer "user_id"
     t.integer "letter_id"
-    t.integer "letter_rating"
+    t.integer "rating"
   end
 
   create_table "letters", force: :cascade do |t|
-    t.string "type"
+    t.string "kind"
     t.string "mood"
     t.string "title"
     t.text   "content"
