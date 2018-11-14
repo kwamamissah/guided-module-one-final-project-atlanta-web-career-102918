@@ -1,4 +1,4 @@
-
+class CLI
 
 
 def welcome
@@ -42,6 +42,7 @@ def sign_up
   puts "What's your email address?"
   email = STDIN.gets.chomp
   User.create(name: name, email: email)
+  #need next method maybe explain how the app works
 end
 
 def search_email(email)
@@ -52,20 +53,52 @@ def log_in
   puts "What's your email address"
   email = STDIN.gets.chomp
 
-  until User.find_by(email: email) != nil
+  until search_email(email) != nil
     puts "Please put a valid email"
     email = STDIN.gets.chomp
   end
-  sb_greeting
+  poem_or_quote
 end
 
-def sb_greeting
-  puts  "Would you like a poem or a quote?"
+def find_poems
+  Letter.all.select { |letter| letter.kind == 'poem'}
+end
+
+def find_quotes
+  Letter.all.select { |letter| letter.kind == 'quote'}
+end
+
+def poem_or_quote
+  puts  "Would you like a poem or a quote?" #potentially put person's name in question
   prompt_user = puts "Poem = P Quote = Q"
-  quote_or_poem = STDIN.gets.chomp.downcase
+  poem_or_quote = STDIN.gets.chomp.downcase
+  until poem_or_quote == 'p' || poem_or_quote == 'q'
+    invalid_response
+    prompt_user
+    poem_or_quote = STDIN.gets.chomp.downcase
+  end
+
+  if poem_or_quote == 'p'
+    find_poems.sample.content
+  elsif poem_or_quote == 'q'
+    find_quotes.sample.content
+  end
+  #if p SELECT * FROM letters WHERE kind = 'poem'
+  #if q SELECT * FROM letters WHERE kind = 'quote'
+end
+
+def define_mood
+  puts "What kind of mood are you feeling today?" #potentially put person's name in question
+  prompt_user = puts "Encouragement = E Love = L Funny = F"
+  mood = STDIN.gets.chomp.downcase
+  #if e SELECT * FROM letters WHERE mood = 'encouragement'
+  #if l SELECT * FROM letters WHERE mood = 'love'
+  #if f SELECT * FROM letters WHERE mood = 'funny'
 end
 
 def greeting_return(name, mood, type)
+  #search history for most recent entry
+  # what if they check the site and don't make an entry
   puts "Welcome back #{name}! Would you like another #{mood} #{type}?"
   prompt_user = puts "Y for Yes or N for No"
   response = STDIN.gets.chomp
@@ -85,4 +118,6 @@ end
 
 def greeting_new(name, mood, type)
   "Welcome #{name}! What "
+end
+
 end
