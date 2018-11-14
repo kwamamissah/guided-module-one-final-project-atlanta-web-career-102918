@@ -1,4 +1,4 @@
-class CLI
+# class CLI
 
 
 def welcome
@@ -18,9 +18,6 @@ def welcome
     sign_up
   end
 end
-#if response = s go to sign_up
-#else go to log_in
-
 
 def user_input_name
   STDIN.gets.chomp
@@ -33,8 +30,6 @@ end
 def invalid_response
   puts "Please put a valid response."
 end
-
-
 
 def sign_up
   puts "What's your name"
@@ -57,16 +52,9 @@ def log_in
     puts "Please put a valid email"
     email = STDIN.gets.chomp
   end
-  poem_or_quote
+  post_login
 end
 
-def find_poems
-  Letter.all.select { |letter| letter.kind == 'poem'}
-end
-
-def find_quotes
-  Letter.all.select { |letter| letter.kind == 'quote'}
-end
 
 def poem_or_quote
   puts  "Would you like a poem or a quote?" #potentially put person's name in question
@@ -77,23 +65,32 @@ def poem_or_quote
     prompt_user
     poem_or_quote = STDIN.gets.chomp.downcase
   end
-
   if poem_or_quote == 'p'
-    find_poems.sample.content
-  elsif poem_or_quote == 'q'
-    find_quotes.sample.content
+    'poem'
+  else
+    'quote'
   end
-  #if p SELECT * FROM letters WHERE kind = 'poem'
-  #if q SELECT * FROM letters WHERE kind = 'quote'
 end
 
+
+
 def define_mood
+
   puts "What kind of mood are you feeling today?" #potentially put person's name in question
   prompt_user = puts "Encouragement = E Love = L Funny = F"
   mood = STDIN.gets.chomp.downcase
-  #if e SELECT * FROM letters WHERE mood = 'encouragement'
-  #if l SELECT * FROM letters WHERE mood = 'love'
-  #if f SELECT * FROM letters WHERE mood = 'funny'
+  until mood == 'e' || mood == 'l' || mood == 'f'
+    invalid_response
+    prompt_user
+    mood = STDIN.gets.chomp.downcase
+  end
+  if mood == 'e'
+    'encouragement'
+  elsif mood == 'l'
+    'love'
+  else
+    'funny'
+  end
 end
 
 def greeting_return(name, mood, type)
@@ -107,17 +104,21 @@ def greeting_return(name, mood, type)
     prompt_user
     response = STDIN.gets.chomp
   end
-
   if response == "y"
-
   elsif response == "n"
-
   end
 end
 
+
+def post_login
+  kind = poem_or_quote
+  mood = define_mood
+  result = Letter.where(kind: kind, mood: mood)
+  puts result.sample.content
+end
 
 def greeting_new(name, mood, type)
   "Welcome #{name}! What "
 end
 
-end
+# end
