@@ -1,4 +1,4 @@
-
+class StartApp
 
 
 def welcome
@@ -51,7 +51,7 @@ end
 def log_in
   puts "What's your email address"
   email = STDIN.gets.chomp
-  sb_greeting 
+  sb_greeting
 end
 
 def sb_greeting
@@ -81,3 +81,6 @@ end
 def greeting_new(name, mood, type)
   "Welcome #{name}! What "
 end
+
+
+end 
