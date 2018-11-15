@@ -19,15 +19,10 @@ class User < ActiveRecord::Base
   end
 
   def fav_letters
-
     favs = History.where("user_id = ? AND rating > ?", self.id, 3)
     favs.each do |fav|
       puts Letter.find(fav.letter_id).title
     end
-
-
-
-
   end
 
 

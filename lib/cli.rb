@@ -1,5 +1,5 @@
-class CLI
-
+# class CLI
+#
 
   def initialize
     @user = nil
@@ -11,7 +11,7 @@ class CLI
     puts ""
     puts ""
     puts ""
-    
+
     weekday = DateTime.now.strftime('%A')
     puts "Happy #{weekday}!  I am Truly Unique <3.  Sign up or Log in"
     prompt_user = puts "Sign up = S Login = L"
@@ -45,7 +45,7 @@ class CLI
       email = STDIN.gets.chomp
     end
       @user = User.create(name: name, email: email)
-
+    greeting_new(name)
     post_login
 
   end
@@ -81,10 +81,9 @@ class CLI
       puts "Please put a valid email"
       email = STDIN.gets.chomp
     end
-
     @user = User.find_by email: email
+    greeting_return(email)
 
-    post_login
   end
 
 
@@ -125,10 +124,19 @@ class CLI
     end
   end
 
-  def greeting_return(name, mood, type)
+  def greeting_return(email)
     #search history for most recent entry
     # what if they check the site and don't make an entry
-    puts "Welcome back #{name}! Would you like another #{mood} #{type}?"
+    # History.where("user_id = ? AND rating > ?", self.id, 3)
+    user = User.where(email: email)[0]
+    name = user.name
+    `say "Welcome back #{name}!"`
+    letters = History.where("user_id = ?", user.id)
+    most_recent_letter = letters.last.letter_id
+    mood = Letter.find(most_recent_letter).mood
+    kind = Letter.find(most_recent_letter).kind
+    puts "Would you like to see your last #{mood} #{kind} again?"
+    `say "Would you like to see your last #{mood} #{kind} again?"`
     prompt_user = puts "Y for Yes or N for No"
     response = STDIN.gets.chomp
     until response.downcase == 'y' || response.downcase == 'n'
@@ -137,7 +145,9 @@ class CLI
       response = STDIN.gets.chomp
     end
     if response == "y"
+      Letter.find(most_recent_letter).content
     elsif response == "n"
+      post_login
     end
   end
 
@@ -153,8 +163,11 @@ class CLI
 
   end
 
-  def greeting_new(name, mood, type)
-    "Welcome #{name}! What "
+  def greeting_new(name)
+
+    `say "Welcome #{name}! Truly Unique wants you to have a great day! Would you like a poem or a quote"`
+
+
   end
 
 
@@ -192,5 +205,5 @@ class CLI
 
   end
 
-
-end
+#
+# end
