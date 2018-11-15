@@ -32,10 +32,17 @@ class CLI
     name = STDIN.gets.chomp
     puts "What's your email address?"
     email = STDIN.gets.chomp
-    @user = User.create(name: name, email: email)
-    #instance variable, put it at the end of the method,
+
+    until email != search_email(email).email
+      puts "Email already exists.  Please enter a different email"
+      email = STDIN.gets.chomp
+      binding.pry
+    end
+    binding.pry
+      @user = User.create(name: name, email: email)
+      binding.pry
     post_login
-    #change later
+
   end
 
   def search_email(email)
@@ -66,7 +73,7 @@ class CLI
     end
 
     @user = User.find_by email: email
-    
+
     post_login
   end
 
@@ -139,5 +146,7 @@ class CLI
   def greeting_new(name, mood, type)
     "Welcome #{name}! What "
   end
+
+
 
 end
