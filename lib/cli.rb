@@ -1,11 +1,17 @@
 class CLI
 
+
   def initialize
     @user = nil
     @rating = nil
   end
 
   def welcome
+    hello
+    puts ""
+    puts ""
+    puts ""
+    
     weekday = DateTime.now.strftime('%A')
     puts "Happy #{weekday}!  I am Truly Unique <3.  Sign up or Log in"
     prompt_user = puts "Sign up = S Login = L"
@@ -24,7 +30,8 @@ class CLI
   end
 
   def invalid_response
-    puts "Please put a valid response."
+    pastel = Pastel.new
+    puts pastel.red("Please put a valid response.")
   end
 
   def sign_up
@@ -33,15 +40,18 @@ class CLI
     puts "What's your email address?"
     email = STDIN.gets.chomp
 
-    until email != search_email(email).email
+    until new_email?(email)
       puts "Email already exists.  Please enter a different email"
       email = STDIN.gets.chomp
-      binding.pry
     end
-    binding.pry
       @user = User.create(name: name, email: email)
-      binding.pry
+
     post_login
+
+  end
+
+  def new_email?(email)
+    search_email(email).nil?
 
   end
 
@@ -147,6 +157,40 @@ class CLI
     "Welcome #{name}! What "
   end
 
+
+  def hello
+    pastel = Pastel.new
+
+    puts ""
+    puts ""
+    puts ""
+     puts pastel.red("
+    .___________..______       __    __   __      ____    ____
+    |           ||   _  \\     |  |  |  | |  |     \\   \\  /   /
+    `---|  |----`|  |_)  |    |  |  |  | |  |      \\   \\/   /
+        |  |     |      /     |  |  |  | |  |       \\_    _/
+        |  |     |  |\\  \\----.|  `--'  | |  `----.    |  |
+        |__|     | _| `._____| \\______/  |_______|    |__|
+
+    __    __  .__   __.  __    ______      __    __   _______      ___
+   |  |  |  | |  \\ |  | |  |  /  __  \\    |  |  |  | |   ____|    /  /    _
+   |  |  |  | |   \\|  | |  | |  |  |  |   |  |  |  | |  |__      |  |    (_)
+   |  |  |  | |  . `  | |  | |  |  |  |   |  |  |  | |   __|     |  |
+   |  `--'  | |  |\\   | |  | |  `--'  '--.|  `--'  | |  |____    |  |     _
+    \\______/  |__| \\__| |__|  \\_____\\_____\\\\______/  |_______|   |  |    (_)
+                                                                  \\__\\
+                                                                  ")
+
+      puts     pastel.yellow("start_your_day_on_a_positive_note".center(70))
+
+
+
+
+
+
+
+
+  end
 
 
 end
